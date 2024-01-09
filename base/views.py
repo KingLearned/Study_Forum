@@ -7,12 +7,12 @@ from django.contrib.auth import authenticate, login, logout
 # from django.contrib.auth.forms import UserCreationForm
 from .models import Room, Topic, Message, User
 from .forms import RoomForm, UserForm, MyUserCreationForm
-# Create your views here.
+
 
 def home(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
 
-    query_rooms = Room.objects.filter(Q(topic__name__icontains=q) | Q(name__icontains=q) |  Q(description__icontains=q))
+    query_rooms = Room.objects.filter(Q(topic__name__icontains=q) | Q(name__icontains=q) | Q(description__icontains=q))
 
     topics = Topic.objects.all()[0:5]
     room_count = query_rooms.count()
@@ -53,21 +53,21 @@ def logoutUser(request):
     return redirect('home')
 
 
-def registerUser(requset):
+def registerUser(request):
     form = MyUserCreationForm()
 
-    if requset.method == 'POST':
-        form = MyUserCreationForm(requset.POST)
+    if request.method == 'POST':
+        form = MyUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
             user.username = user.username.lower()
             user.save()
-            login(requset, user) 
+            login(request, user)
             return redirect('home')
         else:
-            messages.error(requset, 'Any Occurred!')
+            messages.error(request, 'Any Occurred!')
             
-    return render(requset, 'base/login_register.html', {'form':form})
+    return render(request, 'base/login_register.html', {'form': form})
 
 
 def room(request, pk):
@@ -83,19 +83,19 @@ def room(request, pk):
         )
         query_rooms.participants.add(request.user)
         return redirect('room', pk=query_rooms.id)
-    context = {'room': query_rooms, 'room_messages':room_messages, 'participants':participants}
+    context = {'room': query_rooms, 'room_messages': room_messages, 'participants': participants}
     
     return render(request, 'base/room.html', context)
 
 
-def userProfile(request,pk):
+def userProfile(request, pk):
     user = User.objects.get(id=pk)
     rooms = user.room_set.all()
     room_messages = user.message_set.all()
     topics = Topic.objects.all()
-    context = {'user':user, 'rooms':rooms, 'topics':topics, 'room_messages':room_messages}
+    context = {'user': user, 'rooms': rooms, 'topics': topics, 'room_messages': room_messages}
 
-    return render(request, 'base/profile.html',context)
+    return render(request, 'base/profile.html', context)
 
 
 @login_required(login_url='login')
@@ -119,31 +119,31 @@ def createRoom(request):
 
 
 def updateRoom(request, pk):
-    room = Room.objects.get(id=pk)
-    form = RoomForm(instance=room)
+    single_room = Room.objects.get(id=pk)
+    form = RoomForm(instance=single_room)
     topics = Topic.objects.all()
-    if request.user != room.host:
+    if request.user != single_room.host:
         return HttpResponse('Your are not allowed here!!')
 
     if request.method == 'POST':
         topic_name = request.POST.get('topic')
         topic, created = Topic.objects.get_or_create(name=topic_name)
-        room.name = request.POST.get('name')
-        room.topic = topic
-        room.description = request.POST.get('description')
-        room.save()
+        single_room.name = request.POST.get('name')
+        single_room.topic = topic
+        single_room.description = request.POST.get('description')
+        single_room.save()
         return redirect('home')
 
-    context = {'form': form, 'topics': topics, 'room': room}
+    context = {'form': form, 'topics': topics, 'room': single_room}
     return render(request, 'base/room_form.html', context)
 
 
 def deleteRoom(request, pk):
-    room = Room.objects.get(id=pk)
+    single_room = Room.objects.get(id=pk)
     if request.method == 'POST':
-        room.delete()
+        single_room.delete()
         return redirect('home')
-    return render(request, 'base/delete.html', {'obj': room})
+    return render(request, 'base/delete.html', {'obj': single_room})
 
 
 def deleteMessage(request, pk):
