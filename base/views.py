@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 from .models import Room, Topic, Message, User
 from .forms import RoomForm, UserForm, MyUserCreationForm
 
-
+# The Home View
 def home(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
 
