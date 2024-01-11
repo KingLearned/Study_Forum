@@ -76,12 +76,13 @@ def registerUser(request):
             return redirect('home')
         else:
             for field, errors in form.errors.items():
-                for error in errors:
-                    messages.error(request, f'{field}: {error}')
+                messages.error(request, f'{field}: {errors}')
+                # for error in errors:
+                #     messages.error(request, f'{field}: {error}')
 
     # Now, you can print the messages if needed
-    for msg in messages.get_messages(request):
-        print(msg)
+    # for msg in messages.get_messages(request):
+    #     print(msg)
     return render(request, 'base/login_register.html', {'form': form})
 
 
