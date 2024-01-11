@@ -19,7 +19,7 @@ class MyUserCreationForm(UserCreationForm):
         common_passwords = ["password", "12345678", "qwerty", "admin", "letmein", "welcome", "123abc"]
 
         if len(password2) < 6:
-            raise ValidationError('This password is too short. It must contain at least 8 characters.')
+            raise ValidationError('This password is too short. It must contain at least 6 characters.')
 
         if password2.lower() in common_passwords:
             raise ValidationError('This password is too common.')

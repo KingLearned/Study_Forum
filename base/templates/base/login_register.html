@@ -72,14 +72,14 @@
             <div class="form__group form__group">
                 <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                 {{ field }}
-                {% for error in field.errors %}
-                  <p style="color: red;" class="message">{{ error }}</p>
-                  <script>
-                    setTimeout( () => {
-                      document.querySelectorAll('.message') ? document.querySelectorAll('.message').forEach( ele => ele.remove() ) : '' 
-                    }, 3000);
-                  </script>
-                {% endfor %}
+                <p style="color: red; height: 15px; margin-bottom: 10px;" class="message">
+                  {% for error in field.errors %}
+                    <span>{{ error }}</span>
+                    <script>
+                      setTimeout(() => { document.querySelectorAll('.message span').forEach( ele => ele.remove() ) }, 3000);
+                    </script>
+                  {% endfor %}
+                </p>
             </div>
             {% endfor %}
 
