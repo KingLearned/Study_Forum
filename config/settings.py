@@ -130,7 +130,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = '/home/Mrlearned/Study_Forum/static'
+STATIC_ROOT = '/home/Mrlearned/Study_Forum/static_root'
 
 MEDIA_URL = '/images/'
 
