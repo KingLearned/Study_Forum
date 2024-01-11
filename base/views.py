@@ -53,6 +53,19 @@ def logoutUser(request):
 def registerUser(request):
     form = MyUserCreationForm()
 
+    # if request.method == 'POST':
+    #     form = MyUserCreationForm(request.POST)
+    #     if form.is_valid():
+    #         user = form.save(commit=False)
+    #         user.username = user.username.lower()
+    #         user.save()
+    #         login(request, user)
+    #         return redirect('home')
+    #     else:
+    #         messages.error(request, 'Any Occurred!')
+    #         for msg in messages:
+    #             print(msg)
+            
     if request.method == 'POST':
         form = MyUserCreationForm(request.POST)
         if form.is_valid():
@@ -62,8 +75,13 @@ def registerUser(request):
             login(request, user)
             return redirect('home')
         else:
-            messages.error(request, 'Any Occurred!')
-            
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f'{field}: {error}')
+
+    # Now, you can print the messages if needed
+    for msg in messages.get_messages(request):
+        print(msg)
     return render(request, 'base/login_register.html', {'form': form})
 
 
