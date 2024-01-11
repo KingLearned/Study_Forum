@@ -391,6 +391,8 @@ a {
 
 .layout {
   margin-top: 2.4rem;
+  background-color: red;
+  height: 00px;
 }
 
 .layout > .container {
@@ -479,7 +481,7 @@ a {
 ================================*/
 
 .form__group {
-  margin-bottom: 2rem;
+  margin-bottom: 5px ;
   width: 100%;
 }
 
@@ -818,7 +820,7 @@ a {
 
 .auth__tagline {
   text-align: center;
-  margin-bottom: 3rem;
+  /* margin-bottom: 3rem; */
   color: var(--color-main);
   font-weight: 500;
   font-size: 1.8rem;

@@ -9,6 +9,10 @@ class MyUserCreationForm(UserCreationForm):
         model = User
         fields = ['name', 'username', 'email', 'password1', 'password2']
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['email'].widget.attrs.pop('autofocus', None)
+
 class RoomForm(ModelForm):
     class Meta:
         model = Room
