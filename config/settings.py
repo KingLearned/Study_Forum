@@ -134,9 +134,7 @@ STATIC_ROOT = '/home/Mrlearned/Study_Forum/static'
 
 MEDIA_URL = '/images/'
 
-# STATICFILES_DIRS = [BASE_DIR / 'static']
-
-# STATIC_DIR = BASE_DIR / 'static'
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
 MEDIA_ROOT = BASE_DIR / 'static/images'
 
