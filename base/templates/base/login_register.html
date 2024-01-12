@@ -1,19 +1,6 @@
 {% extends 'main.html' %}
 
 {% block content %}
-  <style>
-    .lay{
-      width: 90%;
-      max-width: 48rem;
-      min-height: 40rem;
-      background-color: var(--color-dark);
-      border-radius: 1rem;
-      box-shadow: 1px 1px 6px 3px rgba(0, 0, 0, 0.1);
-      min-width: 40%; 
-      margin: auto; 
-      margin-top: 20px;
-    }
-  </style>
   {% if page == 'login' %}
     <div class="lay">
       <h3 style="background-color: var(--color-dark-light); padding: 1rem; text-transform: uppercase; text-align: center; font-size: 2.2rem; border-radius: 15px 15px 0 0;">Login</h3>
@@ -43,15 +30,11 @@
 
         <div class="auth__action" style="display: flex; flex-direction: column; align-items: center; padding: 15px 0;">
           <div style="height: 20px;">
-            {% if messages %}
-              {% for message in messages %}
-                <p class="messages" style="color:red">{{ message }}</p>
-                <script>
-                  setTimeout( () => {
-                    document.querySelector('.messages') ? document.querySelector('.messages').remove() : '' 
-                  }, 3000);
-                </script>
-              {% endfor %}
+            {% if error %}
+              <p class="messages" style="color:red">{{ error }}</p>
+              <script>
+                setTimeout( () => { document.querySelector('.messages') ? document.querySelector('.messages').remove() : '' }, 3000);
+              </script>
             {% endif %}
           </div>
           <p>Don't have an account?</p>

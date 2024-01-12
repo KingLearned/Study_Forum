@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
+from django.contrib import messages as logerror
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
@@ -14,21 +15,26 @@ def home(request):
 
     query_rooms = Room.objects.filter(Q(topic__name__icontains=q) | Q(name__icontains=q) | Q(description__icontains=q))
 
-    topics = Topic.objects.all()[0:5]
+    topics = Topic.objects.all()
+    
     room_count = query_rooms.count()
     room_messages = Message.objects.filter(Q(room__topic__name__icontains=q))[0:5]
 
-    context = {'rooms': query_rooms, 'topics': topics, 'room_count': room_count, 'room_messages':room_messages}
+    context = {'rooms': query_rooms, 'topics': topics[0:5], 'topicscount' : topics.count(), 'room_count': room_count, 'room_messages':room_messages}
     return render(request, 'base/home.html', context)
 
 
 def loginPage(request):
+    context = {'page':'login'}
+    
     if request.user.is_authenticated:
         return redirect('home')
     else:
+        error = None
         if request.method == 'POST':
             email = request.POST.get('email')
             pass_word = request.POST.get('password')
+
 
             try:
                 user = User.objects.get(email=email)
@@ -37,13 +43,11 @@ def loginPage(request):
                     login(request, user)
                     return redirect('home')
                 else:
-                    messages.error(request, 'Username or Password does not exist!')
+                    error = 'Incorrect username or password!'
             except:
-                messages.error(request, 'User does not exist!')
+                error = 'User does not exist!'
 
-        context = {'page':'login'}
-        return render(request, 'base/login_register.html', context)
-
+        return render(request, 'base/login_register.html', {'page': 'login', 'error': error})
 
 def logoutUser(request):
     logout(request)
@@ -65,7 +69,23 @@ def registerUser(request):
             for field, errors in form.errors.items():
                 messages.error(request, f'{field}: {errors}')
 
-    return render(request, 'base/login_register.html', {'form': form})
+    return render(request, 'base/login_register.html', {'form': form, 'action': 'Register'})
+
+
+hostemail = [
+    'jimmy@gmail.com','john.doe@gmail.com','jane.smith@gmail.com','mike.j@gmail.com','emily.white@gmail.com',  'alex.turner@gmail.com',  'grace.lee@gmail.com',    'daniel.brown@gmail.com', 'sophie.miller@gmail.com','chris.davis@gmail.com',  'olivia.wilson@gmail.com',
+]
+
+import random
+# for room in programming_rooms:
+#     topic, created = Topic.objects.get_or_create(name='Open Source Contributions')
+#     Room.objects.create(
+#                 host=User.objects.get(email=random.choice(hostemail)),
+#                 topic=topic,
+#                 name=room['topic'],
+#                 description=room['desc'],
+#             )
+
 
 
 def room(request, pk):
@@ -91,7 +111,7 @@ def userProfile(request, pk):
     rooms = user.room_set.all()
     room_messages = user.message_set.all()
     topics = Topic.objects.all()
-    context = {'user': user, 'rooms': rooms, 'topics': topics, 'room_messages': room_messages}
+    context = {'user': user, 'rooms': rooms, 'topics': topics[0:5], 'topicscount': topics.count(), 'room_messages': room_messages}
 
     return render(request, 'base/profile.html', context)
 
