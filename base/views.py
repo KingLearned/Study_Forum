@@ -101,7 +101,8 @@ def room(request, pk):
         )
         query_rooms.participants.add(request.user)
         return redirect('room', pk=query_rooms.id)
-    context = {'room': query_rooms, 'room_messages': room_messages, 'participants': participants}
+    user = request.user if str(request.user) != 'AnonymousUser' else ''
+    context = {'room': query_rooms, 'room_messages': room_messages, 'participants': participants, 'user':user}
     
     return render(request, 'base/room.html', context)
 

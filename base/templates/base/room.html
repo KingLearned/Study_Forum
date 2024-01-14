@@ -123,12 +123,14 @@
         {% endfor %}
       </div>
 
-      <div class="room__message" style="padding: 0;">
-        <form action="" method="POST">
-          {% csrf_token %}
-          <input name="body" placeholder="Write your message here..." />
-        </form>
-      </div>
+      {% if user %}
+        <div class="room__message" style="padding: 0;">
+          <form action="" method="POST">
+            {% csrf_token %}
+            <input name="body" placeholder="Write your message here..." />
+          </form>
+        </div>
+      {% endif %}
     </div>
   </div>
 
