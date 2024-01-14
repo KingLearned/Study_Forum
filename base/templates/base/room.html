@@ -137,9 +137,9 @@
 
   <div class="parti" style="width: 25%; height: 900px;   background: var(--color-dark); height: 630px;  border-radius: 0.7rem;">
     <h3 class="participants__top" style="border-radius: 10px 10px 0 0;">Participants <span>({{participants.count}} Joined)</span></h3>
-    <div class="participants__list" style="height: auto;">
+    <div style="height: auto; padding: 2rem;">
       {% for user in participants %}
-      <a href="{%  url 'user-profile' user.id %}" class="participant">
+      <a href="{%  url 'user-profile' user.id %}" class="participant" style="width: max-content;">
         <div class="avatar avatar--medium">
           <img src="{{user.avatar.url}}" />
         </div>

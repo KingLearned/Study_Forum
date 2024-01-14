@@ -173,7 +173,8 @@ def deleteMessage(request, pk):
 
     if request.method == 'POST':
         message.delete()
-        return redirect('room')
+        return redirect(f'/room/{message.room.id}')
+    
     return render(request, 'base/delete.html', {'obj': message})
 
 
