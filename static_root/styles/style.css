@@ -391,8 +391,8 @@ a {
 
 .layout {
   margin-top: 2.4rem;
-  background-color: red;
   height: 00px;
+  background-color: gainsboro;
 }
 
 .layout > .container {
@@ -424,7 +424,7 @@ a {
 /*========== Layout Box ==========*/
 
 .layout__box {
-  width: 90%;
+  width: 50%;
   max-width: 48rem;
   min-height: 40rem;
   position: absolute;
@@ -903,7 +903,7 @@ a {
 .room,
 .participants {
   background: var(--color-dark);
-  max-height: 87.5vh;
+  max-height: 800px;
   border-radius: 0.7rem;
   overflow: hidden;
   position: relative;
@@ -966,13 +966,7 @@ a {
 }
 
 .room__header {
-  max-height: 30vh;
-  overflow-y: auto;
-  position: absolute;
-  width: 95%;
   background: var(--color-dark);
-  z-index: 999;
-  top: 4.4rem;
   padding-top: 2rem;
   padding-bottom: 1rem;
 }
@@ -1047,6 +1041,7 @@ a {
   margin-top: 1rem;
   margin-bottom: 4rem;
   height: 64%;
+  width: 50px;
 }
 
 .threads h3 {
@@ -1059,8 +1054,6 @@ a {
   background: var(--color-bg);
   border-radius: 0.7rem;
   overflow-y: auto;
-  height: 100%;
-  margin-top: 28vh;
   padding: 0 2rem 4rem 2rem;
 }
 
@@ -1101,11 +1094,11 @@ a {
 
 .room__message {
   padding: 2rem;
-  position: absolute;
+  /* position: absolute;
   z-index: 111;
   bottom: 0;
   left: 0;
-  right: 0;
+  right: 0; */
   background: transparent;
 }
 
@@ -1142,7 +1135,7 @@ a {
 
 .participants__list {
   padding: 2rem;
-  height: 82.5vh;
+  height: 100%;
   overflow-y: scroll;
   padding-bottom: 0;
 }
