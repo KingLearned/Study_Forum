@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 # from django.contrib.auth.forms import UserCreationForm
 from .models import Room, Topic, Message, User
 from .forms import RoomForm, UserForm, MyUserCreationForm
-
+import random
 # The Home View
 def home(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
@@ -16,11 +16,17 @@ def home(request):
     query_rooms = Room.objects.filter(Q(topic__name__icontains=q) | Q(name__icontains=q) | Q(description__icontains=q))
 
     topics = Topic.objects.all()
-    
     room_count = query_rooms.count()
-    room_messages = Message.objects.filter(Q(room__topic__name__icontains=q))[0:5]
+    room_messages = Message.objects.filter(Q(room__topic__name__icontains=q))[0:6]
+    
 
-    context = {'rooms': query_rooms, 'topics': topics[0:5], 'topicscount' : topics.count(), 'room_count': room_count, 'room_messages':room_messages}
+
+    page = request.GET.get('page')
+    total_page = (len(query_rooms) // 5)
+    start_page = (int(page)*5) - 5 if page else 0
+    stop_page = (int(page)*5) if page else 5
+
+    context = {'rooms': query_rooms[start_page:stop_page], 'topics': topics[0:5], 'topicscount' : topics.count(), 'room_count': room_count, 'room_messages':room_messages, 'pages': range(1, total_page+1)}
     return render(request, 'base/home.html', context)
 
 

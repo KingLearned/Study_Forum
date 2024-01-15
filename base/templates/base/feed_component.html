@@ -41,11 +41,15 @@
 {% endfor %}
 <style>
     .pageing{
-        background-color: #51546E; padding: 5px 15px; border-radius: 5px; margin: 0 5px;
+        background-color: #51546E; padding: 5px 15px; border-radius: 5px; margin: 5px;
     }
 </style>
-<div style="background-color: #3F4156; border-radius: 5px; padding: 5px; margin-bottom: 15px; display: flex; justify-content: center;">
-    <a href="" class="pageing">1</a>
-    <a href="" class="pageing">2</a>
-    <a href="" class="pageing">3</a>
+<div style="background-color: #3F4156; border-radius: 5px; padding: 5px; display: flex; flex-wrap: wrap; margin-bottom: 15px; display: flex; justify-content: center;">
+    {% for page in pages %}
+        {% if request.GET.page|default:0|add:0 == page %}
+            <a href="{% url 'home' %}?page={{ page }}" class="pageing" style="background-color: #2D2D39;">{{page}}</a>
+        {% else %}
+            <a href="{% url 'home' %}?page={{ page }}" class="pageing">{{page}}</a>
+        {% endif %}
+    {% endfor %}
 </div>
