@@ -22,8 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-@n#8sjb$s=%y@j!c0mg2-@_2+g14@xx+w)_@gnztz#$txfchz*'
 
-ALLOWED_HOSTS = ["mrlearned.pythonanywhere.com", "127.0.0.1"]
-
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -134,12 +133,9 @@ STATIC_ROOT = '/home/Mrlearned/Study_Forum/static_root'
 
 MEDIA_URL = '/images/'
 
-# STATICFILES_DIRS = [BASE_DIR / 'static']
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-
-# MEDIA_ROOT = BASE_DIR / 'static/images'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
+MEDIA_ROOT = BASE_DIR / 'static/images'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
