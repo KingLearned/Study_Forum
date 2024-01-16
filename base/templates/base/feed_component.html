@@ -1,3 +1,8 @@
+<style>
+    .pageing{
+        background-color: #51546E; padding: 5px 15px; border-radius: 5px; margin: 5px;
+    }
+</style>
 {% for room in rooms %}
 <div class="roomListRoom">
     <div class="roomListRoom__header">
@@ -39,17 +44,8 @@
     </div>
 </div>
 {% endfor %}
-<style>
-    .pageing{
-        background-color: #51546E; padding: 5px 15px; border-radius: 5px; margin: 5px;
-    }
-</style>
 <div style="background-color: #3F4156; border-radius: 5px; padding: 5px; display: flex; flex-wrap: wrap; margin-bottom: 15px; display: flex; justify-content: center;">
     {% for page in pages %}
-        {% if request.GET.page|default:0|add:0 == page %}
-            <a href="{% url 'home' %}?page={{ page }}" class="pageing" style="background-color: #2D2D39;">{{page}}</a>
-        {% else %}
-            <a href="{% url 'home' %}?page={{ page }}" class="pageing">{{page}}</a>
-        {% endif %}
+        <a href="{% url 'home' %}?page={{ page }}" class="pageing" {% if request.GET.page|default:0|add:0 == page %} style="background-color: #2D2D39;" {% endif %}>{{page}}</a>
     {% endfor %}
 </div>

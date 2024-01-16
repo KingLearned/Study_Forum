@@ -8,9 +8,15 @@
   .log{
     height: 300px;
   }
+  .roomlay{
+    display: flex; gap: 10px; height: 100%; padding: 2rem 3rem ;
+  }
   @media screen and (max-width: 500px) {
     .room_head {
       width: 100%;
+    }
+    .roomlay{
+      padding: 1rem;
     }
     .log{
       height: 350px;
@@ -18,9 +24,13 @@
     .parti{
       display: none;
     }
+    .room__info{
+      display: block;
+      margin-bottom: 10px;
+    }
   }
 </style>
-<div style="display: flex; gap: 10px; height: 100%; padding: 2rem 3rem ;">
+<div class="roomlay">
   <div class="room_head">
     <div class="room__top" style="border-radius: 15px 15px 0 0;">
       <div class="room__topLeft">
@@ -93,7 +103,7 @@
         {% for message in room_messages %}
         <div style="border-left: 3px solid var(--color-dark); margin: 2rem 0; padding: 2rem;">
           <div class="thread__top">
-            <div class="thread__author">
+            <div class="thread__author room__info">
               <a href="{% url 'user-profile' message.user.id %}" class="thread__authorInfo">
                 <div class="avatar avatar--small">
                   <img src="{{message.user.avatar.url}}" />

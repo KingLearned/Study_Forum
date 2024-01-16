@@ -22,7 +22,7 @@ def home(request):
 
 
     page = request.GET.get('page')
-    total_page = (len(query_rooms) // 5)
+    total_page = len(query_rooms) // 5 if len(query_rooms) % 5 == 0 else (len(query_rooms) // 5) + 1
     start_page = (int(page)*5) - 5 if page else 0
     stop_page = (int(page)*5) if page else 5
 
@@ -191,5 +191,5 @@ def topicsPage(request):
 
 
 def activityPage(request):
-    room_messages = Message.objects.all()
+    room_messages = Message.objects.all()[0:20]
     return render(request, 'base/activity.html', {'room_messages': room_messages})
