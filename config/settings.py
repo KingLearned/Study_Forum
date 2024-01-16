@@ -129,12 +129,11 @@ DEBUG = False
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = '/home/Mrlearned/Study_Forum/static_root'
-# STATIC_ROOT = '/home/Mrlearned/Study_Forum/static_root'
-
-MEDIA_URL = '/images/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+MEDIA_URL = '/images/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
