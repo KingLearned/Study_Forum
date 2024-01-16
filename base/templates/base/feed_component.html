@@ -46,6 +46,16 @@
 {% endfor %}
 <div style="background-color: #3F4156; border-radius: 5px; padding: 5px; display: flex; flex-wrap: wrap; margin-bottom: 15px; display: flex; justify-content: center;">
     {% for page in pages %}
-        <a href="{% url 'home' %}?page={{ page }}" class="pageing" {% if request.GET.page|default:0|add:0 == page %} style="background-color: #2D2D39;" {% endif %}>{{page}}</a>
+        <a 
+        {% if request.path|slice:"1:8" == 'profile' %} 
+            href="{% url 'user-profile' user.id %}?page={{ page }}" 
+        {% else %}
+            href="{% url 'home' %}?page={{ page }}"
+        {% endif %} 
+
+        class="pageing" {% if request.GET.page|default:0|add:0 == page %} 
+                            style="background-color: #2D2D39;" 
+                        {% endif %}>
+        {{page}}</a>
     {% endfor %}
 </div>

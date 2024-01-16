@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 # from django.contrib.auth.forms import UserCreationForm
 from .models import Room, Topic, Message, User
 from .forms import RoomForm, UserForm, MyUserCreationForm
-import random
+import random, os
 # The Home View
 def home(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
@@ -104,7 +104,14 @@ def userProfile(request, pk):
     rooms = user.room_set.all()
     room_messages = user.message_set.all()
     topics = Topic.objects.all()
-    context = {'user': user, 'rooms': rooms, 'topics': topics[0:5], 'topicscount': topics.count(), 'room_messages': room_messages}
+    
+
+    page = request.GET.get('page')
+    total_page = len(rooms) // 4 if len(rooms) % 4 == 0 else (len(rooms) // 4) + 1
+    start_page = (int(page)*4) - 4 if page else 0
+    stop_page = (int(page)*4) if page else 4
+    
+    context = {'user': user, 'rooms': rooms[start_page:stop_page], 'pages': range(1, total_page+1), 'topics': topics[0:5], 'topicscount': topics.count(), 'room_messages': room_messages[0:6]}
 
     return render(request, 'base/profile.html', context)
 
@@ -176,6 +183,13 @@ def updateUser(request):
     form = UserForm(instance=user)
 
     if request.method == 'POST':
+        if request.FILES:
+            file_path = f'static/images/{request.user.avatar}'
+            try:
+                os.remove(file_path)
+            except OSError as e:
+                print(f'Error deleting (file_path): {e}')
+
         form = UserForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             form.save()
