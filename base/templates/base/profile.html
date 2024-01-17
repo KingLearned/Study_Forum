@@ -25,12 +25,14 @@
             {{user.bio}}
           </p>
         </div>
-        <div class="profile__about" style="display: flex;">
-          <h3 style="margin-right: 15px;">Email</h3>
-          <p>
-            {{user.email}}
-          </p>
-        </div>
+        {% if request.user.id == user.id %}
+          <div class="profile__about" style="display: flex;">
+            <h3 style="margin-right: 15px;">Email</h3>
+            <p>
+              {{user.email}}
+            </p>
+          </div>
+        {% endif %}
       </div>
 
       <div class="roomList__header">
