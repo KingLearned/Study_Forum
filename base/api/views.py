@@ -54,16 +54,15 @@ def AutoPost(url_link, post_categoty):
             newsData = []
 
             for index, news_link in enumerate(get_news_link):
-                if index == 1:
 
-                    each_news_link = bs4.BeautifulSoup(requests.get(news_link).content.decode(requests.get(news_link).encoding), "lxml")
+                each_news_link = bs4.BeautifulSoup(requests.get(news_link).content.decode(requests.get(news_link).encoding), "lxml")
 
-                    news_heading = re.sub(r'[^a-zA-Z\'!<>/ ]', '', each_news_link.select('.single-article .post-title')[0].text)
-                    news_image = each_news_link.select('.post-image-wrapper img')[0].get('src')
+                news_heading = re.sub(r'[^a-zA-Z\'!<>/ ]', '', each_news_link.select('.single-article .post-title')[0].text)
+                news_image = each_news_link.select('.post-image-wrapper img')[0].get('src')
 
-                    if each_news_link.select('.post-content'):
-                        paragraphs = [re.sub(r'[^a-zA-Z\'!<>/. ]', '', f'{p}<p><br></p>') for p in each_news_link.select('.post-content p')]
-                        newsData.append({'Title': news_heading, 'Image': news_image, 'Content': paragraphs})
+                if each_news_link.select('.post-content'):
+                    paragraphs = [re.sub(r'[^a-zA-Z\'!<>/. ]', '', f'{p}<p><br></p>') for p in each_news_link.select('.post-content p')]
+                    newsData.append({'Title': news_heading, 'Image': news_image, 'Content': paragraphs})
 
             url = "http://localhost:1000/server/posts/autopost"
             data = { 'payLoad': newsData, 'category': post_categoty }
